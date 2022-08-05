@@ -11,7 +11,7 @@ namespace Spyro.Security.Otp
 
 
 
-        public string Generate(byte[] key, int step, int digits = 6)
+        public string Generate(byte[] key, int step = 30, int digits = 6)
             => Generate(key, GetCurrentCounter(DateTime.UtcNow, step), digits);
         private string Generate(byte[] key, long iterationNumber, int digits = 6)
         {
@@ -43,9 +43,9 @@ namespace Spyro.Security.Otp
             var iterationCounter = GetCurrentCounter(DateTime.UtcNow, step);
             var iterationOffset = 0;
 
-            if (timeTolerance.TotalSeconds > step)
+            if (timeTolerance.TotalSeconds > 30)
             {
-                iterationOffset = Convert.ToInt32(timeTolerance.TotalSeconds / step);
+                iterationOffset = Convert.ToInt32(timeTolerance.TotalSeconds / 30);
             }
 
             var iterationStart = iterationCounter - iterationOffset;
