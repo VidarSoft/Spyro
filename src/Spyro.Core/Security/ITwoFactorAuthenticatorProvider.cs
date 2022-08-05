@@ -8,7 +8,7 @@ namespace Spyro.Security
 {
     public interface ITwoFactorAuthenticatorProvider
     {
-        string Generate();
-        bool Validate(string value);
+        string Generate(string key, int duration);
+        bool Validate(string key, string code, int duration);
     }
 }

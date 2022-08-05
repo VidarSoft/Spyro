@@ -1,17 +1,22 @@
-﻿using System;
+﻿using Spyro.Security.Otp;
+using System;
+using System.Text;
 
 namespace Spyro.Security
 {
-    public class OTPAuthenticator : ITwoFactorAuthenticatorProvider
+    public class OtpAuthenticator : ITwoFactorAuthenticatorProvider
     {
-        public string Generate()
+        private readonly TotpGenerator _generator;
+
+        public OtpAuthenticator(TotpGenerator generator)
         {
-            throw new NotImplementedException();
+            _generator = generator;
         }
 
-        public bool Validate(string value)
-        {
-            throw new NotImplementedException();
-        }
+        public string Generate(string key, int duration) => _generator.Generate(GetBytes(key), duration);
+        public bool Validate(string key, string code, int duration) => _generator.Validate(GetBytes(key), code, duration);
+
+
+        private byte[] GetBytes(string s) => Encoding.UTF8.GetBytes(s);
     }
 }
