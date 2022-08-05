@@ -5,15 +5,15 @@ using System.Security.Cryptography;
 
 namespace Spyro.Security.Otp
 {
-    public class TotpGenerator
+    public static class TotpGenerator
     {
-        private readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 
 
-        public string Generate(byte[] key, int step = 30, int digits = 6)
+        public static string Generate(byte[] key, int step = 30, int digits = 6)
             => Generate(key, GetCurrentCounter(DateTime.UtcNow, step), digits);
-        private string Generate(byte[] key, long iterationNumber, int digits = 6)
+        private static string Generate(byte[] key, long iterationNumber, int digits = 6)
         {
 
             var counter = BitConverter.GetBytes(iterationNumber);
@@ -32,12 +32,12 @@ namespace Spyro.Security.Otp
             var result = otp % (int)Math.Pow(10, digits);
             return result.ToString().PadLeft(digits, '0');
         }
-        public bool Validate(byte[] key, string code, int step, TimeSpan? timeTolerance = default) => GetCurrentOtps(key, step, timeTolerance ?? TimeSpan.FromSeconds(step)).Any(c => c == code);
+        public static bool Validate(byte[] key, string code, int step = 30, int digits = 6, TimeSpan? timeTolerance = default) => GetCurrentOtps(key, step, digits, timeTolerance ?? TimeSpan.FromSeconds(step)).Any(c => c == code);
 
 
-        public long GetCurrentCounter() => GetCurrentCounter(DateTime.UtcNow, 30);
-        public long GetCurrentCounter(DateTime timestamp, int step) => (long)(timestamp - _epoch).TotalSeconds / step;
-        private string[] GetCurrentOtps(byte[] key, int step, TimeSpan timeTolerance)
+        private static long GetCurrentCounter() => GetCurrentCounter(DateTime.UtcNow, 30);
+        private static long GetCurrentCounter(DateTime timestamp, int step) => (long)(timestamp - _epoch).TotalSeconds / step;
+        private static string[] GetCurrentOtps(byte[] key, int step, int digits, TimeSpan timeTolerance)
         {
             var codes = new List<string>();
             var iterationCounter = GetCurrentCounter(DateTime.UtcNow, step);
@@ -53,7 +53,7 @@ namespace Spyro.Security.Otp
 
             for (var counter = iterationStart; counter <= iterationEnd; counter++)
             {
-                codes.Add(Generate(key, counter));
+                codes.Add(Generate(key, counter, digits));
             }
 
             return codes.ToArray();

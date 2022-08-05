@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Spyro.Core\Spyro.Core.csproj" />
+    <ProjectReference Include="..\Spyro.Security\Spyro.Security.csproj" />
   </ItemGroup>
 
 </Project>
