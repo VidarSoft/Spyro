@@ -11,17 +11,17 @@ namespace Spyro.Security.GoogleAuthenticator
     public interface IGoogleAuthenticator
     {
         SetupConfig Generate(string issuer, string account, string key);
-
         bool Validate(string key, string code);
 
     }
     public class GoogleAuthenticator : IGoogleAuthenticator
     {
-
+        public SetupConfig Generate(string issuer, string account, string key) => GenerateSetupCode(issuer, account, GetBytes(key));
         public bool Validate(string key, string code) => TotpGenerator.Validate(GetBytes(key), code);
 
 
-        public SetupConfig Generate(string issuer, string account, string key) => GenerateSetupCode(issuer, account, GetBytes(key));
+
+
         private SetupConfig GenerateSetupCode(string issuer, string account, byte[] key)
         {
             if (string.IsNullOrWhiteSpace(account))
@@ -52,9 +52,6 @@ namespace Spyro.Security.GoogleAuthenticator
 
             return qrCodeUrl;
         }
-
         private byte[] GetBytes(string s, bool isBase32 = false) => isBase32 ? Base32Encoding.ToBytes(s) : Encoding.UTF8.GetBytes(s);
     }
-
-    public record SetupConfig(string Account, string ManualSecretKey, string QrCodeUrl);
 }
