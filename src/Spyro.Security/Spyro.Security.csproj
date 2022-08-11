@@ -1,11 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<LangVersion>9</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<VersionPrefix>0.0.1-alpha</VersionPrefix>
+		<Company>VidarSoft</Company>
+		<PackageProjectUrl>https://github.com/VidarSoft/Spyro</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/VidarSoft/Spyro</RepositoryUrl>
+		<Authors>Mohammad Mokhtari</Authors>
+		<Description>The Spyro framework provides an easy way to develop applications on the .net platform</Description>
+		<Copyright> Copyright (c) VidarSoft 2022</Copyright>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Spyro.Core\Spyro.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Spyro.Core\Spyro.Core.csproj" />
+	</ItemGroup>
 
 </Project>
