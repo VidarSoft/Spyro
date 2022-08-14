@@ -2,7 +2,7 @@
 {
     public interface ICaptchaService
     {
-        string Generate();
-        bool Validate(string value);
+        string Generate(string key, int length);
+        bool Validate(string key, string value);
     }
 }
