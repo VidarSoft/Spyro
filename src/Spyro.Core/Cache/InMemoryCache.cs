@@ -48,11 +48,4 @@ namespace Spyro.Cache
             cache.Set(cacheItem, cacheItemPolicy);
         }
     }
-
-
-    public enum ExpirationType
-    {
-        Sliding,
-        Absolute
-    }
 }
